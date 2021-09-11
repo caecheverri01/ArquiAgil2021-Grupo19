@@ -65,15 +65,19 @@ def generar_advertencia_tiempos(servicio):
     tendecia indica que los tiempos están incrementando
     """
     print(Fore.BLUE + '\nVERIFICACION ADVERTENCIA DEGRADACION SERVICIO')    
-    tiempo_base = 200
+    tiempo_base = 1000
     tiempos = []
-    registros_exito = db.session.query(EjecucionServicio).filter(EjecucionServicio.servicio == servicio, EjecucionServicio.respuesta == '201')
+    incrementos = []
+    porcentaje_incrementos = 0
+
+    registros_exito = db.session.query(EjecucionServicio).filter(EjecucionServicio.servicio == servicio, EjecucionServicio.respuesta == '200')
 
     for ejecucion_servicio in registros_exito:
         tiempos.append(ejecucion_servicio.tiempo - tiempo_base)
    
-    incrementos = [num for num in tiempos if num > 0]
-    porcentaje_incrementos = len(incrementos) / len(tiempos) * 100
+    if(len(tiempos) > 0):
+        incrementos = [num for num in tiempos if num > 0]
+        porcentaje_incrementos = len(incrementos) / len(tiempos) * 100
 
     print(Fore.BLUE + 'Total respuesta exito: {0} - Total > base: {1} - Porcentaje > base: {2:2.0f}'.format(len(tiempos), len(incrementos), porcentaje_incrementos))
 
