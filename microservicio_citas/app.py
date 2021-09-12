@@ -12,4 +12,5 @@ db.init_app(app)
 db.create_all()
 cors = CORS(app)
 
+api = Api(app)
 api.add_resource(VistaCita, '/cita/<int:id_cita>')

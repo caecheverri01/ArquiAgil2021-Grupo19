@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request 
-from flask import random
+import random
 from ..modelo import db, Cita, CitaSchema 
 from ..tareas import registrar_evento
 
@@ -14,7 +14,6 @@ class VistaCita(Resource):
 
         al1 = random.randrange(1, 1000, 1)
         al2 = random.randrange(900, 1200, 1)
-        c = 0
 
         def es_primo(nro):
             for n in range(2, nro):
@@ -22,13 +21,10 @@ class VistaCita(Resource):
                     return False
             return True
 
-        while c < 25:
-            if es_primo(al1):
-                registrar_evento.delay("srv_cita_001|501|"+str(al2))
-            else:
-                registrar_evento.delay("srv_cita_001|200|"+str(al2))
-            time.sleep(5)
-            c += 1
+        if es_primo(al1):
+            registrar_evento.delay("srv_cita_001|501|"+str(al2))
+        else:
+            registrar_evento.delay("srv_cita_001|200|"+str(al2))
 
         if cita is None:
             return {'mensaje':'La cita no existe'}, 400 
