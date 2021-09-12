@@ -2,7 +2,8 @@ from flask_restful import Resource
 from flask import request
 import random
 from ..modelo import db, Paciente, PacienteSchema 
-from ..tareas import registrar_evento
+from tarea_cola import registrar_evento
+import random
 
 paciente_schema = PacienteSchema()
 

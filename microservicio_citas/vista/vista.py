@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import request 
 import random
 from ..modelo import db, Cita, CitaSchema 
-from ..tareas import registrar_evento
+from tarea_cola import registrar_evento
 
 cita_schema = CitaSchema()
 
@@ -14,7 +14,7 @@ class VistaCita(Resource):
 
         al1 = random.randrange(1, 1000, 1)
         al2 = random.randrange(900, 1200, 1)
-
+        
         def es_primo(nro):
             for n in range(2, nro):
                 if nro % n == 0:
