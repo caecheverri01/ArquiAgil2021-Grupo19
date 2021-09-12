@@ -9,7 +9,7 @@ cita_schema = CitaSchema()
 class VistaCita(Resource):
 
     def get(self, id_cita):
-        cita = cita.query.filter(cita.id == id_cita).first()
+        cita = Cita.query.filter(Cita.id == id_cita).first()
         db.session.commit()
 
         al1 = random.randrange(1, 1000, 1)
