@@ -13,7 +13,7 @@ class VistaCita(Resource):
         db.session.commit()
 
         al1 = random.randrange(1, 1000, 1)
-        al2 = random.randrange(900, 1200, 25)
+        al2 = random.randrange(900, 1200, 1)
         c = 0
 
         def es_primo(nro):
