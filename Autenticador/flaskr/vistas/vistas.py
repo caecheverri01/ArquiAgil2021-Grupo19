@@ -16,6 +16,8 @@ class VistaLogIn(Resource):
                 if usuario.bloqueo !=1:
                     token_de_acceso = create_access_token(identity = usuario.nombre)
                     return {"mensaje":"Inicio de sesión exitoso", "token": token_de_acceso}
+                else:
+                    return {'mensaje':'Usuario Bloqueado'}, 401    
             else:
                 return {'mensaje':'Nombre de usuario o contraseña incorrectos'}, 401
 
@@ -54,3 +56,5 @@ class VistaBloqueo(Resource):
     def get(self, id_usuario):
         usuario = Usuario.query.get_or_404(id_usuario)
         return usuario_schema.dump(usuario)
+
+
