@@ -15,7 +15,7 @@ db.create_all()
 api = Api(app)
 api.add_resource(VistaSignIn, '/signin')
 api.add_resource(VistaLogIn, '/login')
-api.add_resource(VistaBloqueo, '/bloqueo/<int:id_usuario>')
+api.add_resource(VistaBloqueo, '/bloqueo/<nombre>')
 
 jwt = JWTManager(app)
 

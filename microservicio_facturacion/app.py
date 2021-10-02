@@ -1,5 +1,6 @@
 from microservicio_facturacion import create_app
 from flask_restful import Api
+from flask_jwt_extended import JWTManager
 from .modelo import db
 from .vista import VistaFacturacion
 from flask_cors import CORS, cross_origin
@@ -10,6 +11,7 @@ app_context.push()
 
 db.init_app(app)
 db.create_all()
+jwt = JWTManager(app)
 cors = CORS(app)
 api = Api(app)
 
