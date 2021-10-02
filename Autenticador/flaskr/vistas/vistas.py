@@ -44,17 +44,16 @@ class VistaSignIn(Resource):
 
 class VistaBloqueo(Resource):
 
-    def put(self, id_usuario):
-        #bloqueo = Usuario(bloqueo=request.json["bloqueo"])
-        usuario = Usuario.query.get_or_404(id_usuario)
-        usuario.bloqueo =  True 
-         #request.json.get("bloqueo",usuario.bloqueo)
-        db.session.commit()
-        return {'Mensaje':'Bloqueado', 'Usuario':usuario.nombre},401
+    def put(self, nombre):
         
+        db.session.query(Usuario).filter(Usuario.nombre == nombre).update({"bloqueo": True})
+        db.session.commit()
+        return {'Mensaje':'Bloqueado', 'Usuario':nombre},401
+        
+    """
+    def get(self, nombre):
+       usuario = Usuario.query.get_or_404(nombre)
+       return usuario_schema.dump(usuario)
 
-    def get(self, id_usuario):
-        usuario = Usuario.query.get_or_404(id_usuario)
-        return usuario_schema.dump(usuario)
-
+    """
 
