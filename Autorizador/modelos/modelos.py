@@ -1,11 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from marshmallow import fields
-import enum
 
 db = SQLAlchemy()
    
-class logLogin(db.Model):
+class logAutorizaciones(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     usuario = db.Column(db.String[50])
     recurso = db.Column(db.String[20])

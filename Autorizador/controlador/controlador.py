@@ -1,9 +1,8 @@
-from ..modelos import logLogin, db
+from ..modelos import logAutorizaciones, db
 from colorama import Fore
-import json
+import requests
 
-def validar_usuarios_autorizados(nombreu: str, rec: str, op: str) -> int:
-    maxIntentos = 2
+def validar_permisos(nombreu: str, rec: str, op: str) -> int:
     autorizado=False
     autorizaciones = [{
         'usuario':
@@ -11,15 +10,58 @@ def validar_usuarios_autorizados(nombreu: str, rec: str, op: str) -> int:
         'recursos': [{
             'nombre': 'facturacion',
             'opPermitidas': ['get', 'post', 'put']
-        }]
+        }, {
+            'nombre': 'historia',
+            'opPermitidas': ['get', 'post', 'put']
+        }, {
+            'nombre': 'pacientes',
+            'opPermitidas': ['get', 'post', 'put']
+        }
+        ]
     }, {
         'usuario':
         'equintero',
         'recursos': [{
             'nombre': 'facturacion',
             'opPermitidas': ['get']
-        }]
-    }]
+        }, {
+            'nombre': 'historia',
+            'opPermitidas': ['get', 'post', 'put']
+        }, {
+            'nombre': 'pacientes',
+            'opPermitidas': ['get', 'post', 'put']
+        }
+        ]
+    }, {
+        'usuario':
+        'frojas',
+        'recursos': [{
+            'nombre': 'facturacion',
+            'opPermitidas': ['get', 'post', 'put']
+        }, {
+            'nombre': 'historia',
+            'opPermitidas': ['get', 'post', 'put']
+        }, {
+            'nombre': 'pacientes',
+            'opPermitidas': ['get', 'post', 'put']
+        }
+        ]
+    }, {
+        'usuario':
+        'cecheverri ',
+        'recursos': [{
+            'nombre': 'facturacion',
+            'opPermitidas': ['get', 'post', 'put']
+        }, {
+            'nombre': 'historia',
+            'opPermitidas': ['get', 'post', 'put']
+        }, {
+            'nombre': 'pacientes',
+            'opPermitidas': ['get', 'post', 'put']
+        }
+        ]
+    }
+    ]
 
     """
     Validamos la autorización del usuario al recurso y operación
@@ -38,20 +80,28 @@ def validar_usuarios_autorizados(nombreu: str, rec: str, op: str) -> int:
     """
     Guardamos log de movimiento por el autorizador
     """
-    nuevo_registro = logLogin(usuario=nombreu, recurso=rec, operacion=op, estaAutorizado=autorizado)
+    nuevo_registro = logAutorizaciones(usuario=nombreu, recurso=rec, operacion=op, estaAutorizado=autorizado)
     db.session.add(nuevo_registro)
     db.session.commit()
-    
+
+    if autorizado:
+        return 200
+    return 401
+
+def valida_bloqueo_usuario(nombreu: str):
+    maxIntentos = 2
+
     """
     Analizamos log para validar si debemos bloquear el usuario
     """
-    print(Fore.GREEN + '\nVERIFICACION INTENTOS PERMITIDOS A RECURSOS Y/O OPERACIONES')
+    print(Fore.GREEN + '\nVERIFICACION ACCESO A RECURSOS Y/O OPERACIONES PARA EL USUARIO '+ nombreu)
 
-    intentos = db.session.query(logLogin).filter(logLogin.usuario == nombreu, logLogin.estaAutorizado == False).count()
+    intentos = db.session.query(logAutorizaciones).filter(logAutorizaciones.usuario == nombreu, logAutorizaciones.estaAutorizado == False).count()
 
     if intentos > maxIntentos:
-        return 401
-    return 200
+        resp = requests.put(url='http://127.0.0.1:5001/bloqueo/' + str(2))
+        if resp.status_code == 401:
+            return "Se ha bloqueado el usuario "+ nombreu + " por exceder el límite de accesos no autorizados"
 
 def validar_token(usuario: str, password: str) -> int:
     return 200
