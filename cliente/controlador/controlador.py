@@ -43,3 +43,14 @@ def consumir_hc(token: str, id_historia: int):
     else:
         print(Fore.RED + 'Respuesta no exitosa')
         print(resp.json())
+
+def desbloquear_usuarios(u: str):
+    print(Fore.GREEN + '\nDESBLOQUEO DE USUARIOS')
+    resp = requests.put(url='http://127.0.0.1:5001/bloqueo/' + u)
+    
+    if resp.status_code == 200:
+        print(Fore.BLUE + 'Respuesta exitosa')
+        print(resp.json())
+    else:
+        print(Fore.RED + 'Respuesta no exitosa')
+        print(resp.json())

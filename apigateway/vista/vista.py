@@ -9,7 +9,7 @@ class VistasFacturacion(Resource):
     @jwt_required()
     def get(self, id_factura):
         token = request.headers.get('Authorization')
-        status = 200 #solicitar_validacion_acceso(token, 'facturacion', 'get')
+        status = solicitar_validacion_acceso(token, 'facturacion', 'get')
 
         if status == 200:
             resp = requests.get(url='http://127.0.0.1:5003/facturacion/' + str(id_factura), headers={'Authorization': token})
@@ -22,7 +22,7 @@ class VistasHistoriaClinica(Resource):
     @jwt_required()
     def get(self, id_historia):
         token = request.headers.get('Authorization')
-        status = 200 #solicitar_validacion_acceso(token, 'historia', 'get')
+        status = solicitar_validacion_acceso(token, 'historia', 'get')
 
         if status == 200:
             resp = requests.get(url='http://127.0.0.1:5002/historia/' + str(id_historia), headers={'Authorization': token})
