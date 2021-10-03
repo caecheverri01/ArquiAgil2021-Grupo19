@@ -10,6 +10,7 @@ def autenticar(usuario: str, password: str) -> str:
     resp = requests.post(url='http://127.0.0.1:5000/login', json = data_post)
 
     if resp.status_code == 401:
+        print(Fore.RED + resp.json()['mensaje'])
         return None
     else:
         print(Fore.BLUE + 'Respuesta exitosa')
@@ -33,5 +34,12 @@ def consumir_hc(token: str, id_historia: int):
     """
     Invoca el microservicio de historia clínica
     """
+    print(Fore.GREEN + '\nCONSUME SERVICIO HISTORIA CLINICA')
     resp = requests.get(url='http://127.0.0.1:5000/historia/' + str(id_historia), headers={'Authorization': 'Bearer ' + token})
-    print(resp.json())
+    
+    if resp.status_code == 200:
+        print(Fore.BLUE + 'Respuesta exitosa')
+        print(resp.json())
+    else:
+        print(Fore.RED + 'Respuesta no exitosa')
+        print(resp.json())

@@ -14,4 +14,4 @@ api = Api(app)
 
 api.add_resource(VistasAutenticador, '/login')
 api.add_resource(VistasFacturacion, '/facturacion/<int:id_factura>')
-api.add_resource(VistasHistoriaClinica, '/historiaclinica')
+api.add_resource(VistasHistoriaClinica, '/historia/<int:id_historia>')
