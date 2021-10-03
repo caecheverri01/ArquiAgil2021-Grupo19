@@ -45,11 +45,18 @@ class VistaSignIn(Resource):
 class VistaBloqueo(Resource):
 
     def put(self, nombre):
-        
         db.session.query(Usuario).filter(Usuario.nombre == nombre).update({"bloqueo": True})
         db.session.commit()
         return {'Mensaje':'Bloqueado', 'Usuario':nombre},401
+
+class VistaDesbloqueo(Resource):
+
+    def put(self, nombre):
+        db.session.query(Usuario).filter(Usuario.nombre == nombre).update({"bloqueo": False})
+        db.session.commit()
+        return {'Mensaje':'Desbloqueado', 'Usuario':nombre},401
         
+
     """
     def get(self, nombre):
        usuario = Usuario.query.get_or_404(nombre)

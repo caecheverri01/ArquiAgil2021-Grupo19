@@ -1,7 +1,7 @@
 from flaskr import create_app
 from flask_restful import Api
 from .modelos import db
-from .vistas import VistaSignIn, VistaLogIn, VistaBloqueo
+from .vistas import VistaSignIn, VistaLogIn, VistaBloqueo, VistaDesbloqueo
 from flask_jwt_extended import JWTManager
 
 
@@ -16,6 +16,7 @@ api = Api(app)
 api.add_resource(VistaSignIn, '/signin')
 api.add_resource(VistaLogIn, '/login')
 api.add_resource(VistaBloqueo, '/bloqueo/<nombre>')
+api.add_resource(VistaDesbloqueo, '/desbloqueo/<nombre>')
 
 jwt = JWTManager(app)
 
