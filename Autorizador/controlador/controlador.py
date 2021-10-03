@@ -89,7 +89,7 @@ def validar_permisos(nombreu: str, rec: str, op: str) -> int:
     return 401
 
 def valida_bloqueo_usuario(nombreu: str):
-    maxIntentos = 2
+    maxIntentos = 3
 
     """
     Analizamos log para validar si debemos bloquear el usuario
@@ -100,6 +100,7 @@ def valida_bloqueo_usuario(nombreu: str):
     
     if intentos > maxIntentos:
         resp = requests.put(url='http://127.0.0.1:5001/bloqueo/' + nombreu)
+        print(Fore.RED + '\nSe ha bloqueado el usuario '+ nombreu + ' por exceder consumos no autorizados')
 
 def validar_token(usuario: str, password: str) -> int:
     return 200

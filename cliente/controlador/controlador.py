@@ -14,6 +14,7 @@ def autenticar(usuario: str, password: str) -> str:
         return None
     else:
         print(Fore.BLUE + 'Respuesta exitosa')
+        print(resp.json()['token'])
         return resp.json()['token']
 
 def consumir_facturacion(token: str, id_factura: int):
@@ -46,7 +47,7 @@ def consumir_hc(token: str, id_historia: int):
 
 def desbloquear_usuarios(u: str):
     print(Fore.GREEN + '\nDESBLOQUEO DE USUARIOS')
-    resp = requests.put(url='http://127.0.0.1:5001/bloqueo/' + u)
+    resp = requests.put(url='http://127.0.0.1:5001/desbloqueo/' + u)
     
     if resp.status_code == 200:
         print(Fore.BLUE + 'Respuesta exitosa')

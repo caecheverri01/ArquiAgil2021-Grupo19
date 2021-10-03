@@ -17,11 +17,11 @@ with app.app_context():
         i = i + 1
         for usuario in usuarios:
             print(Fore.YELLOW + '\nINICIA PETICIONES CON USUARIO {}'.format(usuario['usuario']))
-            desbloquear_usuarios(usuario['usuario'])
-            #token = autenticar(usuario['usuario'], usuario['contrasena'])
-            #time.sleep(2)
-            #if token != None:                
-                #consumir_facturacion(token, 1)
-                #time.sleep(2)
-                #consumir_hc(token, 1)
-                #time.sleep(2)
+            #desbloquear_usuarios(usuario['usuario'])
+            token = autenticar(usuario['usuario'], usuario['contrasena'])
+            time.sleep(2)
+            if token != None:                
+                consumir_facturacion(token, 1)
+                time.sleep(2)
+                consumir_hc(token, 1)
+                time.sleep(2)
