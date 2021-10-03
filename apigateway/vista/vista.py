@@ -9,10 +9,11 @@ class VistasFacturacion(Resource):
     @jwt_required()
     def get(self, id_factura):
         token = request.headers.get('Authorization')
-        status = solicitar_validacion_acceso(token, 'facturacion', 'get')
+        status = solicitar_validacion_acceso(token, 'facturacion', 'post')
 
         if status == 200:
-            return requests.get(url='http://127.0.0.1:5003/facturacion/' + str(id_factura), headers={'Authorization': token}).json()
+            return 'Consumo OK', 200
+            #return requests.get(url='http://127.0.0.1:5003/facturacion/' + str(id_factura), headers={'Authorization': token}).json()
         else:
             return 'Unauthorized', 401
 

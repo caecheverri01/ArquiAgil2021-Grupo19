@@ -19,5 +19,5 @@ with app.app_context():
             print(Fore.YELLOW + '\nINICIA PETICIONES CON USUARIO {}'.format(usuario['usuario']))
             token = autenticar(usuario['usuario'], usuario['contrasena'])
             time.sleep(1)
-            #consumir_facturacion(token, 1)
+            consumir_facturacion(token, 1)
             time.sleep(2)

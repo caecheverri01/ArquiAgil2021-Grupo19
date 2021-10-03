@@ -37,7 +37,7 @@ def validar_permisos(nombreu: str, rec: str, op: str) -> int:
         'frojas',
         'recursos': [{
             'nombre': 'facturacion',
-            'opPermitidas': ['get', 'post', 'put']
+            'opPermitidas': ['get']
         }, {
             'nombre': 'historia',
             'opPermitidas': ['get', 'post', 'put']
@@ -48,7 +48,7 @@ def validar_permisos(nombreu: str, rec: str, op: str) -> int:
         ]
     }, {
         'usuario':
-        'cecheverri ',
+        'cecheverri',
         'recursos': [{
             'nombre': 'facturacion',
             'opPermitidas': ['get', 'post', 'put']
@@ -97,9 +97,10 @@ def valida_bloqueo_usuario(nombreu: str):
     print(Fore.GREEN + '\nVERIFICACION ACCESO A RECURSOS Y/O OPERACIONES PARA EL USUARIO '+ nombreu)
 
     intentos = db.session.query(logAutorizaciones).filter(logAutorizaciones.usuario == nombreu, logAutorizaciones.estaAutorizado == False).count()
-
+    print("intentos"+str(intentos))
     if intentos > maxIntentos:
-        resp = requests.put(url='http://127.0.0.1:5001/bloqueo/' + str(2))
+        resp = requests.put(url='http://127.0.0.1:5001/bloqueo/' + nombreu)
+        print(resp.status_code)
         if resp.status_code == 401:
             return "Se ha bloqueado el usuario "+ nombreu + " por exceder el límite de accesos no autorizados"
 

@@ -6,7 +6,7 @@ class VistaAutorizaUsuarios(Resource):
 
     def get(self):
         servicio = validar_permisos(request.args.get('usuario', None), request.args.get('recurso', None), request.args.get('operacion', None))
-        valida_bloqueo_usuario(request.args.put('usuario', None))
+        valida_bloqueo_usuario(request.args.get('usuario', None))
         
         if servicio == 200:
             return 'Autorizado', 200
